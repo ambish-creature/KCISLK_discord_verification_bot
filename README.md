@@ -1,4 +1,4 @@
-## Discord Verification Bot
+# Discord Verification Bot
 
 This Python bot verifies users on Discord using student IDs and verification codes.
 
@@ -11,9 +11,9 @@ Before running this bot, ensure you have the following installed on your system:
 
 ## Getting Started
 
-# Cloning the Repository & cd the directory & creating `.env` file & Installing Dependencies
-Bash / macOS / Lunix users:
-Open your terminal and run the following command:
+## Cloning the Repository & cd the directory & creating `.env` file & Installing Dependencies
+`Bash` / `macOS` / `Lunix` users:
+Open your `terminal` with root and run the following command:
 
 ```bash
 git clone https://github.com/ambish-creature/a_test-discord-bot.git && cd a_test-discord-bot; \
