@@ -6,14 +6,13 @@ This Python bot verifies users on Discord using student IDs and verification cod
 
 Before running this bot, ensure you have the following installed on your system:
 
-- [Homebrew](https://brew.sh/)
+- [Homebrew](https://brew.sh/) for `bash` users:
 
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-- [Python 3](https://www.python.org/downloads/)
-`bash` users:
+- [Python 3](https://www.python.org/downloads/) for `bash` users:
 
 ```bash
 curl -LO https://www.python.org/ftp/python/3.12.0/python-3.12.0-macos11.pkg && \
@@ -25,7 +24,7 @@ Or install through homebrew:
 brew install python
 ```
 
-- [Git](https://git-scm.com/)
+- [Git](https://git-scm.com/) for `bash` users:
 
 ```bash
 brew install git
@@ -50,4 +49,4 @@ pip install -r requirements.txt
 python main.py
 ```
 
-The bot should now be up and running.
+The Discord bot should now be up and running.
