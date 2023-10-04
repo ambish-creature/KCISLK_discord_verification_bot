@@ -32,7 +32,11 @@ def chatgpt_response(prompt):
     response_dict = response.get("choice")
     if response_dict and len(response_dict) > 0:
         prompt_response = response_dict[0]["text"]
-    return prompt_response
+    try:
+        return prompt_response
+    except Exception as e:
+        print("Error message: ", e)
+        return ("Error message: ", e)
 
 def find_student_class(student_id):
     with open("student_list.txt", "r") as file:
@@ -85,11 +89,15 @@ async def on_message(message):
     
     if command == '/ai' or command == '/bot' or command == '/chatgpt':
         bot_response = chatgpt_response(prompt=user_message)
-        try:
-            await message.channel.send("ChatGPT response: ", bot_response)
-        except Exception as e:
-            print("Error message: ", e)
-            await message.channel.send("Error message: ", e)
+        if bot_response.startswith("Error message: ") == True:
+            print(bot_response)
+        else: 
+            try:
+                await message.channel.send("ChatGPT response: ", bot_response)
+            except Exception as e:
+                print("Error message: ", e)
+                await message.channel.send("Error message: ", e)
+
     
     elif p_message == "hi":
         await message.channel.send("Hello!")
