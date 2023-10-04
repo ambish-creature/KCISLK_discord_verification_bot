@@ -4,24 +4,17 @@ from discord.utils import get
 import time
 import random
 import responses
-# import chatgpt
-# from chatgpt import Conversation
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import smtplib
 from dotenv import load_dotenv
 import os
 import openai
-# from app.chatgpt_ai.openai import chatgpt_response
-
-
 email_verification_mappings = {}
 student_id_verification_code = ["",""]
-
 load_dotenv()
 discord_token = os.getenv("DISCORD_TOKEN")
 openai.api_key = os.getenv('CHATGPT_API_KEY')
-
 def chatgpt_response(prompt):
     response = openai.Completion.create(
         model='gpt-3.5-turbo',
@@ -37,7 +30,6 @@ def chatgpt_response(prompt):
     except Exception as e:
         print("Error message: ", e)
         return ("Error message: ", e)
-
 def find_student_class(student_id):
     with open("student_list.txt", "r") as file:
         for line in file:
@@ -45,11 +37,8 @@ def find_student_class(student_id):
             if line[0] == student_id:
                 return line[1]
     return "Student ID not found"
-
 TOKEN = "MTE1NDY1OTM2Njc1NTEyMzI2MA.GH_ftP.KNasarORC-iMpq9GbwtdQgaI_HzbXRP8Adjb9k"
-
 client = commands.Bot(command_prefix='!', intents=discord.Intents.all())
-
 async def send_message(message, user_message):
     try:
         response = responses.handle_response(user_message)
@@ -59,11 +48,9 @@ async def send_message(message, user_message):
             await message.author.send(response)
     except Exception as e:
         print("Error message: ", e)
-
 @client.event
 async def on_ready():
     print(f"{client.user} is now running")
-
 @client.event
 async def on_member_join(member):
     channels = client.get_all_channels()
@@ -75,18 +62,15 @@ async def on_member_join(member):
         print("invite message sent successfully")
     else:
         print("invite message sent failed")
-
 @client.event
 async def on_message(message):
     global stored_verification_code, student_id
     p_message = message.content.lower()
-
     for text in ['/ai', '/bot', '/chatgpt']:
         if p_message.startswith(text):
             command=p_message.split(' ')[0]
             user_message=p_message.replace(text, '')
             print(f"{command}{user_message}")
-    
     if command == '/ai' or command == '/bot' or command == '/chatgpt':
         bot_response = chatgpt_response(prompt=user_message)
         if bot_response.startswith("Error message: ") == True:
@@ -97,20 +81,14 @@ async def on_message(message):
             except Exception as e:
                 print("Error message: ", e)
                 await message.channel.send("Error message: ", e)
-
-    
     elif p_message == "hi":
         await message.channel.send("Hello!")
-    
     elif p_message == "hello":
         await message.channel.send("Hi!")
-        
     elif p_message == "@account verification#7215":
         await message.channel.send("How can I assist you today?")
-
     elif p_message == "<@!1154659366755123260>":
         await message.channel.send("How can I assist you today?")
-    
     elif p_message[:2] == "lj" and len(p_message) == 7 or p_message[:2] == "ls" and len(p_message) == 7:
         student_id = p_message
         student_id_verification_code[0] = (student_id)
@@ -125,7 +103,6 @@ async def on_message(message):
         content.attach(MIMEText(f"this is your discord verification code {verification_code}. \nThanks for your support 😻💘"))
         stored_verification_code = verification_code
         print(verification_code)
-
         with smtplib.SMTP(host="smtp.gmail.com", port="587") as smtp:
             try:
                 smtp.ehlo()
@@ -142,17 +119,13 @@ async def on_message(message):
             except Exception as e:
                 print("Error message: ", e)
                 await message.channel.send("Not being able to sent verification email. Please report the bug or issue to the administrator as soon as possible.\n無法傳送驗證電子郵件。 請盡快向管理員報告錯誤或問題。")
-            
     elif p_message[:7] == ("!verify"):
         verify, student_id_, verification_code = p_message.split(" ")
-
         stored_code, timestamp = email_verification_mappings.get(student_id_, (None, 0))
         current_time = time.time()
-
         if stored_code == verification_code and current_time - timestamp <= 600:
             del email_verification_mappings[student_id_]
             print("Email verification successful")
-
             class_name = find_student_class(student_id_.upper())
             member = message.author
             role = get(member.guild.roles, name=class_name)
@@ -183,13 +156,11 @@ async def on_message(message):
             elif class_name == "12A" or class_name == "12B" or class_name == "12C" or class_name == "12D" or class_name == "12E":
                 role_grade = "Grade 12 IP"
             role_grade_x = get(member.guild.roles, name=f"{role_grade}")
-            
             if class_name == "701" or class_name == "702" or class_name == "703" or class_name == "704" or class_name == "7A" or class_name == "7B" or class_name == "7C" or class_name == "7D" or class_name == "7E" or class_name == "801" or class_name == "802" or class_name == "803" or class_name == "804" or class_name == "8A" or class_name == "8B" or class_name == "8C" or class_name == "8D" or class_name == "8E" or class_name == "901" or class_name == "902" or class_name == "903" or class_name == "904" or class_name == "9A" or class_name == "9B" or class_name == "9C" or class_name == "9D" or class_name == "9E":
                 role_big_grade = "國中部"
             elif class_name == "1001" or class_name == "1002" or class_name == "10A" or class_name == "10B" or class_name == "10C" or class_name == "10D" or class_name == "10E" or class_name == "1101" or class_name == "1102" or class_name == "11A" or class_name == "11B" or class_name == "11C" or class_name == "11D" or class_name == "11E" or class_name == "1201" or class_name == "1202" or class_name == "12A" or class_name == "12B" or class_name == "12C" or class_name == "12D" or class_name == "12E":
                 role_big_grade = "高中部"
             role_big_grade_x = get(member.guild.roles, name=f"{role_big_grade}")
-            
             print(f"Now try to add role \"{role}\"")
             try:
                 await member.add_roles(role)
@@ -215,8 +186,6 @@ async def on_message(message):
                 await message.channel.send(f'Role "{role_big_grade}" not found.\n"{role_big_grade}"身分組不存在。')
         else:
             await message.channel.send("Invalid verification code or expired or incorrect input format. Please try again.\n過期、無效的驗證碼或是錯誤的輸入格式。請重試。")
-    
     else:
         await send_message(message, p_message)
-
 client.run(TOKEN)
