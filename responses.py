@@ -133,33 +133,3 @@ def handle_response(message) -> str:
     
     elif p_message == "hello":
         return("Hi!")
-
-    if p_message.startswith(('ls1', 'lj1')) == True and len(p_message) == 7:
-        student_id = p_message
-        student_id_verification_code[0] = (student_id)
-        verification_code = ''.join(str(random.randint(0, 9)) for _ in range(16))
-        student_id_verification_code[1] = (verification_code)
-        stored_verification_code = verification_code
-        email_verification_mappings[student_id] = (verification_code, time.time())
-        content = MIMEMultipart()
-        content["subject"] = "學生會 Discord 認證碼 / Student union Discord verification code"
-        content["from"] = "ls11189@stu.kcislk.ntpc.edu.tw"
-        content["to"] = f"{student_id}@stu.kcislk.ntpc.edu.tw"
-        content.attach(MIMEText(f"👇🏻👇🏻👇🏻Your verification code👇🏻👇🏻👇🏻\n👉🏻👉🏻👉🏻{verification_code}👈🏻👈🏻👈🏻\n👆🏻👆🏻👆🏻👆🏻👆🏻👆🏻👆🏻👆🏻👆🏻👆🏻👆🏻👆🏻👆🏻"))
-        stored_verification_code = verification_code
-        print(verification_code)
-
-        with smtplib.SMTP(host="smtp.gmail.com", port="587") as smtp:
-            try:
-                smtp.ehlo()
-                smtp.starttls()
-                smtp.login("ls11189@stu.kcislk.ntpc.edu.tw", "pkllawxjlzifttpe")
-                smtp.send_message(content)
-                return "The verification code has already been sent to your gmail, and it will only be available for 10 minutes, please check your gmail as soon as possible. Please enter (!verify (student id) (verification code))"
-                print("Complete!")
-                result = responses_find_student_class(student_id.upper())
-                print(result)
-                return result
-            except Exception as e:
-                print("Error message: ", e)
-                return "Not being able to sent verification email. Please report the bug or issue to the administrator as soon as possible."
