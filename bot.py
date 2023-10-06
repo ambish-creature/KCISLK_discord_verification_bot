@@ -7,29 +7,8 @@ import responses
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import smtplib
-from dotenv import load_dotenv
-import os
-import openai
 email_verification_mappings = {}
 student_id_verification_code = ["",""]
-load_dotenv()
-discord_token = os.getenv("DISCORD_TOKEN")
-openai.api_key = os.getenv('CHATGPT_API_KEY')
-def chatgpt_response(prompt):
-    response = openai.Completion.create(
-        model='gpt-3.5-turbo',
-        prompt=prompt,
-        temperature=1,
-        max_tokens=100
-    )
-    response_dict = response.get("choice")
-    if response_dict and len(response_dict) > 0:
-        prompt_response = response_dict[0]["text"]
-    try:
-        return prompt_response
-    except Exception as e:
-        print("Error message: ", e)
-        return ("Error message: ", e)
 def find_student_class(student_id):
     with open("student_list.txt", "r") as file:
         for line in file:
@@ -66,28 +45,15 @@ async def on_member_join(member):
 async def on_message(message):
     global stored_verification_code, student_id
     p_message = message.content.lower()
-    for text in ['/ai', '/bot', '/chatgpt']:
-        if p_message.startswith(text):
-            command=p_message.split(' ')[0]
-            user_message=p_message.replace(text, '')
-            print(f"{command}{user_message}")
-    if command == '/ai' or command == '/bot' or command == '/chatgpt':
-        bot_response = chatgpt_response(prompt=user_message)
-        if bot_response.startswith("Error message: ") == True:
-            print(bot_response)
-        else: 
-            try:
-                await message.channel.send("ChatGPT response: ", bot_response)
-            except Exception as e:
-                print("Error message: ", e)
-                await message.channel.send("Error message: ", e)
-    elif p_message == "hi":
+    if p_message == "hi":
         await message.channel.send("Hello!")
     elif p_message == "hello":
         await message.channel.send("Hi!")
     elif p_message == "@account verification#7215":
         await message.channel.send("How can I assist you today?")
     elif p_message == "<@!1154659366755123260>":
+        await message.channel.send("How can I assist you today?")
+    elif p_message == "@!1154659366755123260":
         await message.channel.send("How can I assist you today?")
     elif p_message[:2] == "lj" and len(p_message) == 7 or p_message[:2] == "ls" and len(p_message) == 7:
         student_id = p_message
@@ -100,7 +66,7 @@ async def on_message(message):
         content["subject"] = "學生會 Discord 認證碼 / Student council Discord verification code"
         content["from"] = "ls11189@stu.kcislk.ntpc.edu.tw"
         content["to"] = f"{student_id}@stu.kcislk.ntpc.edu.tw"
-        content.attach(MIMEText(f"this is your discord verification code {verification_code}. \nThanks for your support 😻💘"))
+        content.attach(MIMEText(f"This is your discord verification code: \n{verification_code}\nThis code will only be available for 10 minutes."))
         stored_verification_code = verification_code
         print(verification_code)
         with smtplib.SMTP(host="smtp.gmail.com", port="587") as smtp:
@@ -109,16 +75,16 @@ async def on_message(message):
                 smtp.starttls()
                 smtp.login("ls11189@stu.kcislk.ntpc.edu.tw", "pkllawxjlzifttpe")
                 smtp.send_message(content)
-                await message.channel.send("The verification code has already been sent to your student gmail, and it will only be available for 10 minutes, please check your gmail as soon as possible.\n驗證碼已發送至您的學生Gmail，有效期限僅10分鐘，請盡快查看您的學生Gmail帳號。")
-                await message.channel.send("Verification input format: \"!Verify (your student id) (your verification code)\", remember to add \"!\" before the word \"verify\"\n驗證輸入格式：\"!Verify(你的學號)(你的驗證碼)\"，記得在\"verify\"前面加上\"!\"")
-                await message.channel.send("example: 「!Verify ls12345 1234567890123456」. *** Upper or lower case letters doesn't matter ***\n例子：「!verify ls12345 1234567890123456」。 *** 大寫或小寫字母都可以 ***")
+                await message.channel.send(f"<@!{message.author.id}> The **verification code** has already been sent to your **student Gmail**, and it will only be available for **10 minutes**.\n**驗證碼**已發送至您的**學生Gmail**，有效時間為**10分鐘**。")
+                await message.channel.send(f"<@!{message.author.id}> Verification format: `!Verify (your student id) (your verification code)` \n驗證格式：`!Verify (你的學號) (你的驗證碼)`")
+                await message.channel.send(f"<@!{message.author.id}> example: !Verify ls12345 1234567890123456")
                 print("Complete!")
                 result = find_student_class(student_id.upper())
                 print(result)
                 return result
             except Exception as e:
                 print("Error message: ", e)
-                await message.channel.send("Not being able to sent verification email. Please report the bug or issue to the administrator as soon as possible.\n無法傳送驗證電子郵件。 請盡快向管理員報告錯誤或問題。")
+                await message.channel.send(f"<@!{message.author.id}> Not being able to sent verification email. Please report the bug or issue to the administrator as soon as possible.\n無法傳送驗證電子郵件。 請盡快向管理員報告錯誤或問題。")
     elif p_message[:7] == ("!verify"):
         verify, student_id_, verification_code = p_message.split(" ")
         stored_code, timestamp = email_verification_mappings.get(student_id_, (None, 0))
@@ -164,28 +130,28 @@ async def on_message(message):
             print(f"Now try to add role \"{role}\"")
             try:
                 await member.add_roles(role)
-                await message.channel.send(f'Verification successful! You are now verified. Your role "{class_name}", "{role_grade}" and "{role_big_grade}" will be given by the bot automatically in a minute. If there is a problem, please contact the administrator.\n驗證成功！ 您現已通過驗證。機器人即將自動分配您的身分組“{class_name}”，"{role_grade}" 和 "{role_big_grade}"。 如有疑問，請聯絡管理員。')
+                await message.channel.send(f'<@!{member.id}> Verification successful! You are now verified. Your role "{class_name}", "{role_grade}" and "{role_big_grade}" will be given by the bot automatically in a minute. If there is a problem, please contact the administrator.\n驗證成功！ 您現已通過驗證。機器人即將自動分配您的身分組“{class_name}”，"{role_grade}" 和 "{role_big_grade}"。 如有疑問，請聯絡管理員。')
                 print("Add role successful")
             except Exception as e:
                 print("Error message: ", e)
-                await message.channel.send(f'Role "{class_name}" not found.\n{class_name}身分組不存在。')
+                await message.channel.send(f'<@!{member.id}> Role "{class_name}" not found.\n{class_name}身分組不存在。')
             try:
                 await member.add_roles(role_grade_x)
             except Exception as e:
                 print("Error message: ", e)
-                await message.channel.send(f'Role "{role_grade}" not found.\n"{role_grade}"身分組不存在。')
+                await message.channel.send(f'<@!{member.id}> Role "{role_grade}" not found.\n"{role_grade}"身分組不存在。')
             try:
                 await member.add_roles(role_student)
             except Exception as e:
                 print("Error message: ", e)
-                await message.channel.send(f'Role "Student" not found.\n"Student" 身分組不存在。')
+                await message.channel.send(f'<@!{member.id}> Role "Student" not found.\n"Student" 身分組不存在。')
             try:
                 await member.add_roles(role_big_grade_x)
             except Exception as e:
                 print("Error message: ", e)
-                await message.channel.send(f'Role "{role_big_grade}" not found.\n"{role_big_grade}"身分組不存在。')
+                await message.channel.send(f'<@!{member.id}> Role "{role_big_grade}" not found.\n"{role_big_grade}"身分組不存在。')
         else:
-            await message.channel.send("Invalid verification code or expired or incorrect input format. Please try again.\n過期、無效的驗證碼或是錯誤的輸入格式。請重試。")
+            await message.channel.send(f"<@!{member.id}> Invalid verification code or expired or incorrect input format. Please try again.\n過期、無效的驗證碼或是錯誤的輸入格式。請重試。")
     else:
         await send_message(message, p_message)
 client.run(TOKEN)
