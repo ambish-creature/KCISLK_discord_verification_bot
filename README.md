@@ -32,14 +32,12 @@ brew install git
 
 ## Getting Started
 
-## Cloning the Repository & cd the directory & creating `.env` file & Installing Dependencies
+## Cloning the Repository & cd the directory & Installing Dependencies
 `Bash` / `macOS` / `Lunix` users:
 Open your `terminal` with root / administrator and run the following command:
 
 ```bash
 git clone https://github.com/ambish-creature/a_test-discord-bot.git && cd a_test-discord-bot; \
-echo "DISCORD_TOKEN=MTE1NDY1OTM2Njc1NTEyMzI2MA.GH_ftP.KNasarORC-iMpq9GbwtdQgaI_HzbXRP8Adjb9k" > .env; \
-echo "CHATGPT_API_KEY=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" >> .env; \
 pip install -r requirements.txt
 ```
 
@@ -47,6 +45,37 @@ pip install -r requirements.txt
 
 ```bash
 cd a_test-discord-bot && python main.py
+```
+
+The Discord bot should now be up and running.
+
+`windows` users:
+
+For Windows users, follow these steps to set up the bot:
+
+1. **Install Python 3:**
+   - Download the installer from [Python's official website](https://www.python.org/downloads/).
+   - During installation, make sure to check the box that says "Add Python 3.x to PATH".
+
+2. **Install Git:**
+   - Download the installer from [Git's official website](https://git-scm.com/).
+   - Follow the installation instructions provided by the installer.
+
+3. **Clone the Repository & Install Dependencies:**
+   - Open the command prompt or PowerShell with administrator privileges.
+   - Run the following commands:
+
+   ```bash
+   git clone https://github.com/ambish-creature/a_test-discord-bot.git
+   cd a_test-discord-bot
+   pip install -r requirements.txt
+   ```
+
+### Run the bot:
+
+```bash
+cd a_test-discord-bot
+python main.py
 ```
 
 The Discord bot should now be up and running.
