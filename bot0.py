@@ -14,7 +14,7 @@ from discord_slash.utils.manage_commands import create_option, create_choice
 
 email_verification_mappings = {}
 student_id_verification_code = ["",""]
-TOKEN = "MTE1NDY1OTM2Njc1NTEyMzI2MA.GH_ftP.KNasarORC-iMpq9GbwtdQgaI_HzbXRP8Adjb9k"
+TOKEN = "Please replace me with the new bot token"
 client = commands.Bot(command_prefix='!', intents=discord.Intents.all())
 slash = SlashCommand(client, sync_commands=True)
 
