@@ -9,7 +9,6 @@ import responses
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import smtplib
-import stu_list_a
 from discord_slash import SlashCommand, SlashContext, context
 from discord_slash.utils.manage_commands import create_option, create_choice
 
