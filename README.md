@@ -37,19 +37,19 @@ brew install git
 Open your `terminal` with root / administrator and run the following command:
 
 ```bash
-git clone https://github.com/ambish-creature/a_test-discord-bot.git && cd a_test-discord-bot; \
-pip install -r requirements.txt
+git clone https://github.com/ambish-creature/KCISLK_discord_verification_bot.git && cd KCISLK_discord_verification_bot; \
+pip install discord discord.py discord-py-slash-command
 ```
 
 ### Run the bot:
 
 ```bash
-cd a_test-discord-bot && python main.py
+cd KCISLK_discord_verification_bot && python bot0.py
 ```
 
 The Discord bot should now be up and running.
 
-`windows` users:
+`Windows` users:
 
 For Windows users, follow these steps to set up the bot:
 
@@ -66,16 +66,16 @@ For Windows users, follow these steps to set up the bot:
    - Run the following commands:
 
    ```bash
-   git clone https://github.com/ambish-creature/a_test-discord-bot.git
-   cd a_test-discord-bot
-   pip install -r requirements.txt
+   git clone https://github.com/ambish-creature/KCISLK_discord_verification_bot.git
+   cd KCISLK_discord_verification_bot
+   pip install discord discord.py discord-py-slash-command
    ```
 
 ### Run the bot:
 
 ```bash
-cd a_test-discord-bot
-python main.py
+cd KCISLK_discord_verification_bot
+python bot0.py
 ```
 
 The Discord bot should now be up and running.
