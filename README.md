@@ -34,14 +34,14 @@ brew install git
 
 ## Cloning the Repository & cd the directory & Installing Dependencies
 `Bash` / `macOS` / `Lunix` users:
-Open your `terminal` with root / administrator and run the following command:
+Open your `terminal` with `root` / `administrator` and run the following command:
 
 ```bash
 git clone https://github.com/ambish-creature/KCISLK_discord_verification_bot.git && cd KCISLK_discord_verification_bot; \
 pip install discord discord.py discord-py-slash-command
 ```
 ### Change the bot code:
-open `bot0.py`, find the line "TOKEN", and replace the token with the one I've sent on the discord group.
+open `bot0.py`, find the line "TOKEN" in line 16, and replace the token with the one I've sent on the discord group.
 
 ### Run the bot:
 
@@ -57,7 +57,7 @@ For Windows users, follow these steps to set up the bot:
 
 1. **Install Python 3:**
    - Download the installer from [Python's official website](https://www.python.org/downloads/).
-   - During installation, make sure to check the box that says "Add Python 3.x to PATH".
+   - During installation, make sure to check the box that says "Add Python 3.X to PATH".
 
 2. **Install Git:**
    - Download the installer from [Git's official website](https://git-scm.com/).
@@ -73,7 +73,7 @@ For Windows users, follow these steps to set up the bot:
    pip install discord discord.py discord-py-slash-command
    ```
 ### Change the bot code:
-open `bot0.py`, find the line "TOKEN", and replace the token with the one I've sent on the discord group.
+open `bot0.py`, find the line "TOKEN" in line 16, and replace the token with the one I've sent on the discord group.
 
 ### Run the bot:
 
