@@ -41,7 +41,7 @@ git clone https://github.com/ambish-creature/KCISLK_discord_verification_bot.git
 pip install discord discord.py discord-py-slash-command
 ```
 ### Change the bot code:
-open `bot0.py`, find the line "TOKEN", and replece the token with the one I've sent on the discord group.
+open `bot0.py`, find the line "TOKEN", and replace the token with the one I've sent on the discord group.
 
 ### Run the bot:
 
@@ -73,7 +73,7 @@ For Windows users, follow these steps to set up the bot:
    pip install discord discord.py discord-py-slash-command
    ```
 ### Change the bot code:
-open `bot0.py`, find the line "TOKEN", and replece the token with the one I've sent on the discord group.
+open `bot0.py`, find the line "TOKEN", and replace the token with the one I've sent on the discord group.
 
 ### Run the bot:
 
