@@ -273,7 +273,7 @@ async def send_email_verification_code_command(message, student_id_):
         await message.respond(f"<@!{member.id}> Not being able to sent verification email. Please report the bug or issue to the administrator as soon as possible.\n無法傳送驗證電子郵件。 請盡快向管理員報告錯誤或問題。")
 
 
-@client.slash_command(name="verify", description="Verify the verification code that has been sent to your student gmail, then change your nickname and give the roles to you by the bot automatically.", guild_ids=[1097382252863836190])
+@client.slash_command(name="verify", description="Verify the verification code & change nickname & give roles automatically.", guild_ids=[1097382252863836190])
 @option(
     "student_id_",
     str,
