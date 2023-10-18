@@ -5,7 +5,6 @@ from discord.ext import commands
 from discord.utils import get
 import time
 import random
-import responses
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import smtplib
@@ -14,7 +13,7 @@ from discord_slash.utils.manage_commands import create_option, create_choice
 
 email_verification_mappings = {}
 student_id_verification_code = ["",""]
-TOKEN = "Please replace me with the new bot token"
+TOKEN = "MTE1NDY1OTM2Njc1NTEyMzI2MA.G-eeoJ.fOXYultV3CtDzBam0zdd_X1WqkuSMEGCLwWdts"
 client = commands.Bot(command_prefix='!', intents=discord.Intents.all())
 slash = SlashCommand(client, sync_commands=True)
 
@@ -46,16 +45,6 @@ def find_student_eca(student_id):
                 return b
     return "Student eca not found"
 
-async def send_message(message, user_message):
-    try:
-        response = responses.handle_response(user_message)
-        if not user_message.startswith("?"):
-            await message.channel.send(response)
-        else:
-            await message.author.send(response)
-    except Exception as e:
-        print("Error message: ", e)
-                
 @client.event
 async def on_member_join(member):
     channels = client.get_all_channels()
@@ -234,7 +223,7 @@ async def on_message(message):
         else:
             await send_message(message, p_message)
       
-@client.slash_command(name="send_email_verification_code", guild_ids=[1097382252863836190])
+@client.slash_command(name="send_email_verification_code", description="Send verification code to your student gmail.", guild_ids=[1097382252863836190])
 @option(
     "student_id_",
     str,
@@ -284,7 +273,7 @@ async def send_email_verification_code_command(message, student_id_):
         await message.respond(f"<@!{member.id}> Not being able to sent verification email. Please report the bug or issue to the administrator as soon as possible.\n無法傳送驗證電子郵件。 請盡快向管理員報告錯誤或問題。")
 
 
-@client.slash_command(name="verify", guild_ids=[1097382252863836190])
+@client.slash_command(name="verify", description="Verify the verification code that has been sent to your student gmail, then change your nickname and give the roles to you by the bot automatically.", guild_ids=[1097382252863836190])
 @option(
     "student_id_",
     str,
