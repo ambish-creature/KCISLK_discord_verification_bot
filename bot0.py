@@ -13,7 +13,7 @@ from discord_slash.utils.manage_commands import create_option, create_choice
 
 email_verification_mappings = {}
 student_id_verification_code = ["",""]
-TOKEN = "Replace me with the bot token"
+TOKEN = "Replace me with the bot token I've posted on discord"
 client = commands.Bot(command_prefix='!', intents=discord.Intents.all())
 slash = SlashCommand(client, sync_commands=True)
 
@@ -45,6 +45,15 @@ def find_student_eca(student_id):
                 return b
     return "Student eca not found"
 
+def find_swear_word(ctx):
+    with open("swear_word_list.txt", "r") as file:
+        for line in file:
+            line = line.strip().split("\n")
+            if ctx.lower() in line[0].lower():
+                return "Mind your language."
+            else:
+                pass
+
 @client.event
 async def on_member_join(member):
     channels = client.get_all_channels()
@@ -64,6 +73,12 @@ async def on_message(message):
     p_message = message.content.lower()
     channel = client.get_channel(1157314133713231892)
     member = message.author
+    
+    if find_swear_word(p_message) != None:
+        await message.channel.send(f"<@!{message.author.id}> {find_swear_word(p_message)}")
+    else:
+        pass
+
     
     if message.channel == channel:
         if p_message == "@account verification#7215":
@@ -394,6 +409,46 @@ async def verify_command(message, student_id_, verification_code):
     
     else:
         await message.respond(f"<@!{member.id}> Invalid verification code or expired or incorrect input format. Please try again.\n<@!{member.id}> 過期、無效的驗證碼或是錯誤的輸入格式。請重試。")
+
+@client.slash_command(name="math", description="A little calculation program.", guild_ids=[1097382252863836190])
+@option(
+    "Math_equation",
+    str,
+    description="Enter the math equation you wanted to solve."
+)
+async def math_command(message, math_equation):
+    try:
+        await message.respond(f"The answer to the equation `{math_equation}` is: `{eval(math_equation)}`")
+    except Exception as e:
+        print("Error message: ", e)
+        await message.respond("Due to incorrect input format, the system is not able to process the math equation.")
+
+@client.slash_command(name="random", description="An output random number program.", guild_ids=[1097382252863836190])
+@option(
+    "starting_number",
+    int,
+    description="Enter the starting number."
+)
+@option(
+    "ending_number",
+    int,
+    description="Enter the ending number."
+)
+async def random_command(message, starting_number, ending_number):
+    try:
+        await message.respond(f"Random integer between `{starting_number}` & `{ending_number}` is: `{random.randint(starting_number, ending_number)}`")
+    except Exception as e:
+        print("Error message: ", e)
+        await message.respond("Due to incorrect input format, the system is not able to process the random equation.")
+
+@client.slash_command(name="ping_ms", description="Find the latency/delay of the bot.", pass_context=True, guild_ids=[1097382252863836190])
+async def ping_ms(message):
+    try:
+        await message.respond(f'Bot latency = `{round (client.latency * 1000)}` ms.')
+    except Exception as e:
+        print("Error message: ", e)
+        await message.respond("Due to unexpected error, the system is not able to find the latency.")
+
 
 @client.event
 async def on_ready():
