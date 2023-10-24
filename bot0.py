@@ -61,7 +61,7 @@ async def on_member_join(member):
     channel = client.get_channel(1157314133713231892)
     print(channel)
     if channel is not None:
-        await channel.send(f"<@!{member.id}> Please enter your student id.\n<@!{member.id}>請輸入你的學號。")
+        await channel.send(f"<@!{member.id}> Please enter your student id through text channel or through `/send_email_verification_code` slash command.\n<@!{member.id}>請在文字頻道或是通過 `/send_email_verification_code` slash 指令輸入你的學號。")
         print("invite message sent successfully")
     else:
         print("invite message sent failed")
@@ -75,7 +75,7 @@ async def on_message(message):
     member = message.author
     
     if find_swear_word(p_message) != None:
-        await message.channel.send(f"<@!{message.author.id}> {find_swear_word(p_message)}")
+        await message.author.send(f"<@!{message.author.id}> {find_swear_word(p_message)}")
     else:
         pass
 
