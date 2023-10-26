@@ -423,24 +423,6 @@ async def math_command(message, math_equation):
         print("Error message: ", e)
         await message.respond("Due to incorrect input format, the system is not able to process the math equation.")
 
-@client.slash_command(name="random", description="An output random number program.", guild_ids=[1097382252863836190])
-@option(
-    "starting_number",
-    int,
-    description="Enter the starting number."
-)
-@option(
-    "ending_number",
-    int,
-    description="Enter the ending number."
-)
-async def random_command(message, starting_number, ending_number):
-    try:
-        await message.respond(f"Random integer between `{starting_number}` & `{ending_number}` is: `{random.randint(starting_number, ending_number)}`")
-    except Exception as e:
-        print("Error message: ", e)
-        await message.respond("Due to incorrect input format, the system is not able to process the random equation.")
-
 @client.slash_command(name="ping_ms", description="Find the latency/delay of the bot.", pass_context=True, guild_ids=[1097382252863836190])
 async def ping_ms(message):
     try:
