@@ -410,19 +410,6 @@ async def verify_command(message, student_id_, verification_code):
     else:
         await message.respond(f"<@!{member.id}> Invalid verification code or expired or incorrect input format. Please try again.\n<@!{member.id}> 過期、無效的驗證碼或是錯誤的輸入格式。請重試。")
 
-@client.slash_command(name="math", description="A little calculation program.", guild_ids=[1097382252863836190])
-@option(
-    "Math_equation",
-    str,
-    description="Enter the math equation you wanted to solve."
-)
-async def math_command(message, math_equation):
-    try:
-        await message.respond(f"The answer to the equation `{math_equation}` is: `{eval(math_equation)}`")
-    except Exception as e:
-        print("Error message: ", e)
-        await message.respond("Due to incorrect input format, the system is not able to process the math equation.")
-
 @client.slash_command(name="ping_ms", description="Find the latency/delay of the bot.", pass_context=True, guild_ids=[1097382252863836190])
 async def ping_ms(message):
     try:
