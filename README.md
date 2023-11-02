@@ -38,7 +38,8 @@ Open your `terminal` with `root` / `administrator` and run the following command
 
 ```bash
 git clone https://github.com/ambish-creature/KCISLK_discord_verification_bot.git && cd KCISLK_discord_verification_bot; \
-pip install discord discord.py discord-py-slash-command
+pip install discord discord.py discord-py-slash-command py-cord
+pip install discord-py-interactions==3.0.2
 ```
 ### Change the bot code:
 open `bot0.py`, find the line "TOKEN" in line 16, and replace the token with the one I've sent on the discord group.
@@ -70,7 +71,8 @@ For Windows users, follow these steps to set up the bot:
    ```bash
    git clone https://github.com/ambish-creature/KCISLK_discord_verification_bot.git
    cd KCISLK_discord_verification_bot
-   pip install discord discord.py discord-py-slash-command
+   pip install discord discord.py discord-py-slash-command py-cord
+   pip install discord-py-interactions==3.0.2
    ```
 ### Change the bot code:
 open `bot0.py`, find the line "TOKEN" in line 16, and replace the token with the one I've sent on the discord group.
