@@ -99,10 +99,10 @@ async def on_message(message):
             email_verification_mappings[student_id] = (verification_code, time.time())
             
             content = MIMEMultipart()
-            content["subject"] = "學生會 Discord 認證碼 / Student council Discord verification code"
-            content["from"] = "ls11189@stu.kcislk.ntpc.edu.tw"
+            content["subject"] = "學生會 Discord 認證碼 / Student Council Discord verification code"
+            content["from"] = "kcislksc@kcislk.ntpc.edu.tw"
             content["to"] = f"{student_id}@stu.kcislk.ntpc.edu.tw"
-            content.attach(MIMEText(f"This is your discord verification code: \n{verification_code}\nThis code will only be available for 10 minutes."))
+            content.attach(MIMEText(f"This is your discord verification code:\n{verification_code}\nThis code will only be available for 10 minutes."))
             stored_verification_code = verification_code
             print(verification_code)
             
@@ -110,9 +110,9 @@ async def on_message(message):
                 try:
                     smtp.ehlo()
                     smtp.starttls()
-                    smtp.login("ls11189@stu.kcislk.ntpc.edu.tw", "pkllawxjlzifttpe")
+                    smtp.login("kcislksc@kcislk.ntpc.edu.tw", "vnwkpcfaynypvydp")
                     smtp.send_message(content)
-                    await message.channel.send(f"<@!{message.author.id}> The **verification code** has already been sent to your **student Gmail**, and it will only be available for **10 minutes**.\n**驗證碼**已發送至您的**學生Gmail**，有效時間為**10分鐘**。")
+                    await message.channel.send(f"<@!{message.author.id}> The **verification code** has already been sent to your **Student Gmail**, and it will only be available for **10 minutes**.\n**驗證碼**已發送至您的**學生Gmail**，有效時間為**10分鐘**。")
                     await message.channel.send(f"<@!{message.author.id}> Verification format: `!Verify (your student id) (your verification code)` \n驗證格式：`!Verify (你的學號) (你的驗證碼)`")
                     await message.channel.send(f"<@!{message.author.id}> example: `!Verify ls12345 1234567890123456`")
                     print("Email verification sent successfully")
@@ -258,10 +258,10 @@ async def send_email_verification_code_command(message, student_id_):
             email_verification_mappings[student_id] = (verification_code, time.time())
             
             content = MIMEMultipart()
-            content["subject"] = "學生會 Discord 認證碼 / Student council Discord verification code"
-            content["from"] = "ls11189@stu.kcislk.ntpc.edu.tw"
+            content["subject"] = "學生會 Discord 認證碼 / Student Council Discord verification code"
+            content["from"] = "kcislksc@kcislk.ntpc.edu.tw"
             content["to"] = f"{p_message}@stu.kcislk.ntpc.edu.tw"
-            content.attach(MIMEText(f"This is your discord verification code: \n{verification_code}\nThis code will only be available for 10 minutes."))
+            content.attach(MIMEText(f"This is your discord verification code:\n{verification_code}\nThis code will only be available for 10 minutes."))
             stored_verification_code = verification_code
             print(verification_code)
             print(f"{p_message}@stu.kcislk.ntpc.edu.tw")
@@ -270,10 +270,9 @@ async def send_email_verification_code_command(message, student_id_):
                 try:
                     smtp.ehlo()
                     smtp.starttls()
-                    smtp.login("ls11189@stu.kcislk.ntpc.edu.tw", "pkllawxjlzifttpe")
+                    smtp.login("kcislksc@kcislk.ntpc.edu.tw", "vnwkpcfaynypvydp")
                     smtp.send_message(content)
-                    await message.respond(f"<@!{member.id}> The **verification code** has already been sent to your **student Gmail**, and it will only be available for **10 minutes**.\n**驗證碼**已發送至您的**學生Gmail**，有效時間為**10分鐘**。")
-                    await message.respond(f"<@!{member.id}> Please use slash command `/verify` to finish the verification step. \n請使用`/verify`進行驗證。")
+                    await message.respond(f"<@!{member.id}> The **verification code** has already been sent to your **Student Gmail**, and it will only be available for **10 minutes**.\n**驗證碼**已發送至您的**學生Gmail**，有效時間為**10分鐘**。\n\n<@!{member.id}> Please use slash command `/verification_process` to finish the verification step. \n請使用`/verification_process`進行驗證。")
                     print("Email verification sent successfully")
                     result = find_student_class(student_id.upper())
                     print(f"paired class = \"{result}\"")
@@ -288,7 +287,7 @@ async def send_email_verification_code_command(message, student_id_):
         await message.respond(f"<@!{member.id}> Not being able to sent verification email. Please report the bug or issue to the administrator as soon as possible.\n無法傳送驗證電子郵件。 請盡快向管理員報告錯誤或問題。")
 
 
-@client.slash_command(name="verify", description="Verify the verification code & change nickname & give roles automatically.", guild_ids=[1097382252863836190])
+@client.slash_command(name="verification_process", description="Verify the verification code & change nickname & give roles automatically.", guild_ids=[1097382252863836190])
 @option(
     "student_id_",
     str,
@@ -299,7 +298,7 @@ async def send_email_verification_code_command(message, student_id_):
     str,
     description="Enter your verification code."
 )
-async def verify_command(message, student_id_, verification_code):
+async def verification_process_command(message, student_id_, verification_code):
     print(f"Received interaction: {message.interaction}")
     member = message.author
     stored_code, timestamp = email_verification_mappings.get(student_id_.lower(), (None, 0))
@@ -423,7 +422,6 @@ async def ping_ms(message):
 async def on_ready():
     print(f"{client.user} is now running")
     await slash.sync_all_commands()
-    
-# client.run(TOKEN)
+
 if __name__ == '__main__':
     client.run(TOKEN)
